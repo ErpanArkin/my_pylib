@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
 '''
 This script attach charges calculated with bader charge program to xyz 

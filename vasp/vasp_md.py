@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
 '''
 This is a script to plot temperature, energies, pressure, lattice constants

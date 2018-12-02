@@ -1,4 +1,4 @@
-#!/usr/bin/python3  
+#!/usr/bin/env python3  
 
 from pymatgen.io.vasp.outputs import Vasprun                                                                                                                                      
 from pymatgen.electronic_structure.plotter import BSPlotter   

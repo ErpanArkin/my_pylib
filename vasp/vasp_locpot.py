@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
 from pymatgen.io.vasp.outputs import Outcar, Locpot, Poscar
 from pymatgen.util.plotting import pretty_plot
