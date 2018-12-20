@@ -44,5 +44,5 @@ a.write('charge.xyz')
 
 all_chg['total'] = sum(all_chg.values())
 for i in all_chg:
-	print(i, all_chg[i], ' ', end=" ")
+    print(i, all_chg[i], ' ', end=" ")
 print('')
