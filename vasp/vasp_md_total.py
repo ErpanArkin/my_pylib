@@ -96,5 +96,5 @@ ax2.plot(vol_np[:, 0], vol_np[:, 1] / sca, 'k', linewidth=2)
 ax2.legend(['lat_a', 'lat_b', 'lat_c',
             'volume\n(scaled 1/' + str(round(sca, 2)) + ')'], loc=1)
 
-plt.savefig('vasp_md.png')
+plt.savefig('vasp_md_total.png')
 plt.show()
