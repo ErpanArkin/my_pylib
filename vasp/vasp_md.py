@@ -59,6 +59,10 @@ latc_np = np.array(latc)
 vol_np = np.array(vol)
 
 fig, ax = plt.subplots(2, sharex='col')
+mng = plt.get_current_fig_manager()
+mng.resize(*mng.window.maxsize())
+fig.set_size_inches(
+    (20, 15), forward=True)
 
 plt.xlabel('steps')
 
@@ -92,5 +96,6 @@ ax2.plot(data[:, 0], vol_np / sca, 'k', linewidth=2)
 ax2.legend(['lat_a', 'lat_b', 'lat_c',
             'volume\n(scaled 1/' + str(round(sca, 2)) + ')'], loc=1)
 
-plt.savefig('vasp_md.png')
+
+plt.savefig('vasp_md.png', dpi=300)
 plt.show()

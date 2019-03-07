@@ -60,5 +60,5 @@ if options.verbose:
 
 else:
     plotter.add_dos_dict(element_dos)
-    plotter.show(xlim=[-5, 5])
+    plotter.show()
     plotter.save_plot('vasp_dos.png', xlim=[-5, 5], img_format='png')

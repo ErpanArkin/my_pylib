@@ -12,7 +12,18 @@ Use the g2c_ng from Util/Grid directory of siesta code to get cube file and use 
 import os
 from ase.io import read
 from ase.io.bader import attach_charges
-a = read([x for x in os.listdir() if x.endswith('STRUCT_OUT')][0])
+from glob import glob
+
+
+try:
+    a = read(glob('*.STRUCT_OUT')[0])
+except IndexError:
+    try:
+        a = read(glob('siesta.XSF')[0])
+    except IndexError:
+        print('need either STRUCT_OUT or siesta.XSF from xv2xsf script!')   
+        exit()
+
 attach_charges(a, displacement=0.1)
 
 elms = [x for x in os.listdir() if x.endswith('psf')]
@@ -41,6 +52,14 @@ for i in a:
             all_chg[k] += i.charge
 # output xyz file with charge information
 a.write('charge.xyz')
+
+# fix some labels in xyz files
+with open('charge.xyz') as f:
+   newText=f.read().replace('initial_charges', 'Charge').replace(' =T ', ' ')
+
+with open('charge.xyz', "w") as f:
+   f.write(newText)
+
 
 all_chg['total'] = sum(all_chg.values())
 for i in all_chg:
