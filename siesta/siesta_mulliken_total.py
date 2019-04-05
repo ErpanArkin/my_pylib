@@ -2,7 +2,7 @@
 
 import sys
 import numpy as np
-from ase.io import read
+from ase.io import read,iread,write
 
 file = 'output.out'  # output from siesta, or as the 1st argument
 if len(sys.argv) > 1:
@@ -13,6 +13,7 @@ charge = []
 index = []
 Qtot = []
 in_mulliken = False
+total_sets = []
 
 # parse the output and get valance and mulliken charge
 with open(file, 'r') as f:
@@ -24,6 +25,7 @@ with open(file, 'r') as f:
                 elm[lst_elm] = float(line.split()[-1])
             if 'mulliken: Atomic and Orbital Populations' in line:
                 in_mulliken = True
+
                 charge = []
             lo = True
             if in_mulliken and 'Species:' in line:
@@ -41,43 +43,12 @@ with open(file, 'r') as f:
                 next(f)
                 if 'mulliken' not in next(f):
                     in_mulliken = False
+                    # append for each md steps
+                    total_sets.append(np.array(charge,dtype='float'))
 
+total = np.array(total_sets)
 
-# structure file, can be any file that ase.io. understands
-str_file = 'siesta.xyz'
-if len(sys.argv) > 2:
-    str_file = sys.argv[2]
-
-a = read(str_file)
-
-# reset the values to do sum for each element
-elm = dict.fromkeys(elm, 0)
-
-charge_np = np.array(charge, dtype='float')
-# put the net charge and calculate the sum
-for i, j in zip(a, charge_np):
-    i.charge = j[-1] - j[1]
-    elm[i.symbol] += i.charge
-
-if len(charge) / 2 == len(a):
-    print('spin-polarized caculation...')
-    for i, j in zip(a, charge_np[int(len(charge_np) / 2):]):
-        i.charge -= j[1]
-        elm[i.symbol] -= j[1]
-
-        # output
-a.write('charge.xyz',format='extxyz')
-
-# fix some labels in xyz files
-with open('charge.xyz') as f:
-   newText=f.read().replace('initial_charges', 'Charge').replace(' =T ', ' ')
-
-with open('charge.xyz', "w") as f:
-   f.write(newText)
-
-
-#a=read('charge.xyz')
-
-for k,v in elm.items():
-    print(k,v, end=" ")
-print('total {}'.format(sum(elm.values())))
+a = iread('siesta.AXSF')
+for i,j in zip(a,total[1:]):
+    i.set_initial_charges(j[:,1]-j[:,2])
+    write('total_charges.xyz',i,append=True)
