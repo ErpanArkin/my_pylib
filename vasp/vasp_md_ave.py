@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from ase.io import iread
 import numpy as np
 import sys
@@ -16,8 +18,9 @@ begin = 1
 end = -1
 
 # user defined
-begin = sys.argv[1]
-end = sys.argv[2]
+if len(sys.argv) == 3:
+    begin = sys.argv[1]
+    end = sys.argv[2]
 
 
 lattice = np.array([[0, 0, 0, 0, 0, 0, 0, 0, 0]])
@@ -28,4 +31,4 @@ for i in a:
 ave_lat = lattice[int(begin):int(end), :].mean(axis=0)
 last.set_cell(np.reshape(ave_lat, (3, 3)))
 
-last.write('POSCAR_ave_' + begin + '_' + end)
+last.write('POSCAR_ave_{}_{}'.format(begin,end))

@@ -47,6 +47,7 @@ latc = []
 counter = 0
 for i, j in enumerate(lines):
     if "configuration=" in j:
+        counter = int(j.split()[-1])
         x = []
         for t in lines[i - 5:i - 2]:
             tt = [float(y) for y in t.split()]
@@ -87,6 +88,7 @@ ax[1].legend(['px', 'py', 'pz'], loc=2)
 
 # scale volume values to lattice constants
 # to be able to shown on the same scale
+
 
 ax2 = ax[1].twinx()
 for i in range(1, 4):
