@@ -13,6 +13,19 @@ import subprocess
 import os
 
 exists = os.path.isfile('./ACF.dat')
+exists_xyz = os.path.isfile('./charge.xyz')
+
+if exists_xyz:
+    atoms = read('charge.xyz')
+    elm_set = set(atoms.get_chemical_symbols())
+    elm = dict.fromkeys(elm_set, 0)
+    total_charge = elm.copy()
+    for i in atoms:
+        total_charge[i.symbol] += i.charge
+    for i in sorted(total_charge.keys()):
+        print(' ',i,total_charge[i],end='')
+    print(' sum {}'.format(sum(total_charge.values())))
+    exit()
 
 if not exists:
 
@@ -44,4 +57,7 @@ for i in atoms:
     total_charge[i.symbol] += i.charge
 
 atoms.write('charge.xyz')
-print(total_charge,'sum: {}'.format(sum(total_charge.values())))
+
+for i in sorted(total_charge.keys()):
+    print(' ',i,total_charge[i],end='')
+print(' sum {}'.format(sum(total_charge.values())))

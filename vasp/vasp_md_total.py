@@ -65,8 +65,6 @@ latc_np = np.array(latc)
 vol_np = np.array(vol)
 
 fig, ax = plt.subplots(2, sharex='col')
-mng = plt.get_current_fig_manager()
-mng.resize(*mng.window.maxsize())
 fig.set_size_inches(
     (20, 15), forward=True)
 
