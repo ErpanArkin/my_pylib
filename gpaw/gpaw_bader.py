@@ -37,7 +37,6 @@ if not exists:
     res = subprocess.check_output(["bader", sys.argv[1]])
 
 atoms = read(sys.argv[1])
-
 attach_charges(atoms)
 
 elm_set = set(atoms.get_chemical_symbols())
