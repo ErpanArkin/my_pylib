@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from gpaw import GPAW
 from ase.io import write
 import numpy as np
@@ -30,6 +32,7 @@ plt.text(z[-1] - 0.23, (efermi + v[-n]) / 2,
 plt.xlabel('$z$, r$\AA$')
 plt.ylabel('(Pseudo) electrostatic potential, V')
 plt.xlim([0., z[-1]])
+plt.savefig('locpot.png', dpi=300)
 plt.show()
 
 write('slab.pov', calc.atoms,
