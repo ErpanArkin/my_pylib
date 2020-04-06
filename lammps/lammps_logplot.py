@@ -31,4 +31,5 @@ for i, j in enumerate(ylabel):
     plt.xlabel(xlabel)
     ax[i].set_ylabel(j)
 plt.legend()
+plt.tight_layout()
 plt.show()
