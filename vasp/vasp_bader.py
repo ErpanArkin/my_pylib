@@ -27,6 +27,7 @@ elm.append('total')
 ech = [0] * len(elm)
 all_chg = dict(zip(elm, ech))
 
+print(chg,all_chg)
 
 # calculate the rest charge
 for i in a:

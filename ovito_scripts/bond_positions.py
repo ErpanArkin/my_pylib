@@ -21,9 +21,11 @@ def modify(frame, data):
         #print("There are %i bonds with the following properties:" % data.bonds.count)
         #for property_name in data.bonds.keys():
         #    print("  '%s'" % property_name)
+        print('# atom_type x y z bond_length')
         for i in range(data.bonds.count):
             pos = data.particles['Position'][data.bonds['Topology'][i]].copy()
             large_pos = ~(pos < np.linalg.norm(data.cell.matrix[0:3,0:3], axis=1)).all(axis=1)
             if large_pos.any():
                 pos[large_pos] -= abs(np.linalg.norm(data.cell.matrix[0:3,0:3], axis=1) * data.bonds['Periodic Image'][i])
-            print('C',np.array2string(np.mean(pos,axis=0))[1:-1])
+                pos_len = data.bonds['bond_length'][i]
+            print('C',np.array2string(np.mean(pos,axis=0))[1:-1], pos_len)

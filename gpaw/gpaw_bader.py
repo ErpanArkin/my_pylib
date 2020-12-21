@@ -53,7 +53,7 @@ with open(sys.argv[2]) as f:
             elm[x] = int(line.split()[-1])
 
 for i in atoms:
-    #i.charge = elm[i.symbol] - i.charge
+    i.charge = elm[i.symbol] - i.charge
     total_charge[i.symbol] += i.charge
 
 atoms.write('charge.xyz')

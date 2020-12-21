@@ -1,24 +1,16 @@
 from ovito.data import *
+from collections import Counter
 import numpy
 
 def modify(frame, input, output):
-	print("The input contains %i particles." % input.number_of_particles)
-	cluster_types = numpy.bincount(input.particle_properties['Cluster'].array)
-	x = {}
-	for i,j in zip (input.particle_properties['Particle Type'].array,
-	                input.particle_properties['Cluster'].array):
-		if j not in x.keys():
-			x[j] = ''
-		x[j] += str(i)
-	atom_type = input.particle_properties['Particle Type'].array
-	cluster_types = []
-	for k in x:
-		m = ''.join([str(x[k].count(j))+atom_type[j] for j in set(x[k])])
-		cluster_types.append(m)
-	print(cluster_types)
-	print(input.particle_properties['Particle Type'].array)
-	print(set(cluster_types))
-	each_cluster_number = list(numpy.bincount(cluster_types))
-	print(each_cluster_number)
-	print("type:number")
+	particle_cluster_id = input.particle_properties['Cluster'].array
+	
+	# get the counts of each cluster 
+	cluster_types = numpy.bincount(particle_cluster_id)
+	print("size:counts \n", Counter(cluster_types))
+	
+	# assign the size of the cluster to its composing particles
+	cluster_id_size_dict = Counter(particle_cluster_id)
+	particle_cluster_size = list(map(cluster_id_size_dict.get,particle_cluster_id))
+	output.create_user_particle_property('Cluster_sizes', data_type = 'int', data = particle_cluster_size)
 	
