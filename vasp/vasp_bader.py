@@ -13,6 +13,7 @@ import numpy as np
 
 a = read('CONTCAR')
 attach_charges(a)
+
 elm = []
 
 # get the elements (elm) and their initial # of electron (chg)
@@ -27,15 +28,14 @@ elm.append('total')
 ech = [0] * len(elm)
 all_chg = dict(zip(elm, ech))
 
-print(chg,all_chg)
+print('ZVAL from the OUTACR:',chg)
 
 # calculate the rest charge
 for i in a:
     for j, k in enumerate(elm):
         if i.symbol == k:
-            i.charge = float(chg[j]) - i.charge
-            all_chg[k] += i.charge
-            break
+            # i.charge = float(chg[j]) - i.charge
+            all_chg[i.symbol] += i.charge
 
 # output xyz file with charge information
 a.write('charge.xyz')
